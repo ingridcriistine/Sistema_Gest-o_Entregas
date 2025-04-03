@@ -1,24 +1,17 @@
 import express, { Request, Response, Router } from 'express';
-import ClienteController from '../controllers/ClienteController.ts';
+import TransportadoraController from '../controllers/TransportadoraController.ts';
 
 export default express.Router()
-    .post('/customers',(req,res)=>{
+    .post('/carriers',(req,res)=>{
         try{
-            ClienteController.createCliente(req,res);
+            TransportadoraController.createTransportadora(req,res);
         }catch(e){
             res.status(500);
         }
     })
-    .get('/customers/:id/orders',(req,res)=>{
+    .get('/carriers/:id/deliveries',(req,res)=>{
         try{
-            ClienteController.getOrders(req,res);
-        }catch(e){
-            res.status(500);
-        }
-    })
-    .delete('/customers/:id',(req,res)=>{
-        try{
-            ClienteController.deleteCliente(req,res);
+            TransportadoraController.getEntregas(req,res);
         }catch(e){
             res.status(500);
         }

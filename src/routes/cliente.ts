@@ -23,4 +23,13 @@ export default express.Router()
             res.status(500);
         }
     })
+
+    .post('/customers/login',(req,res)=>{
+        try{
+            ClienteController.login(req,res);
+        }catch(e){
+            res.status(500);
+        }
+
+})
     

@@ -15,13 +15,13 @@ export default class ClienteService{
 
         const cliente = Cliente.findOne({nome});
 
-        // if(cliente != null)
-        //     return {response:false, message:"Cliente já cadastrado"}
-        
-        // const passwordCrypt = crypto.AES.encrypt(data.senha, process.env.SECRET as string).toString()
-        // data.senha = passwordCrypt;
+        if(cliente != null)
+            return {response:false, message:"Cliente já cadastrado"}
 
-        
+        let secret = process.env.SECRET?process.env.SECRET:"Ingrid"
+        const passwordCrypt: string = crypto.AES.encrypt(data.senha, secret as string).toString();
+        data.senha = passwordCrypt;
+
         const newCliente = new Cliente(data);
         await newCliente.save();
         

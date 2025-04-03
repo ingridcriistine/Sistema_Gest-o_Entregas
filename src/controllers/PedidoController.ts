@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import Produto from "../model/Produto.ts";
-import ProdutoService from "../services/produtoService.ts";
+import PedidoService from "../services/pedidoService.ts";
+import Pedido from "../model/Pedido.ts";
 
-class ProdutoController {
+class PedidoController {
     
-    static async createProduto(req: Request, res: Response): Promise<any> {
-        const produto = req.body;
+    static async createPedido(req: Request, res: Response): Promise<any> {
+        const pedido = req.body;
         try {
-            const response = await ProdutoService.create(produto);
+            const response = await PedidoService.create(pedido);
             console.log(response)
             if(response.response){
                 return res.status(201).json({message:response.message});
@@ -18,20 +18,22 @@ class ProdutoController {
         }
     }
 
-    static async getProdutos(req: Request, res: Response) {
+    static async getPedidos(req: Request, res: Response) {
+        const { status } = req.params;
+
         try {
-            const produtos = await Produto.find();
-            res.status(200).json(produtos);
+            const pedidos = await Pedido.find({status});
+            res.status(200).json(pedidos);
         } catch (error) {
-            res.status(400).json({ message: 'Erro ao buscar produtos', error });
+            res.status(400).json({ message: 'Erro ao buscar pedidos', error });
         }
     }
 
-    static async deleteProduto(req: Request, res: Response) {
+    static async updatePedido(req: Request, res: Response) {
         const { id } = req.params;
     
         try {
-            const response = await ProdutoService.delete({id:Number(id)});
+            const response = await PedidoService.update({id:Number(id)});
             if(response.response){
                 return res.status(201).json({message:response.message});
             }
@@ -42,4 +44,4 @@ class ProdutoController {
     }
 }
    
-export default ProdutoController;
+export default PedidoController;
